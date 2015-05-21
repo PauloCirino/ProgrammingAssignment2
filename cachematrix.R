@@ -21,28 +21,30 @@
 #and of course I changed the variables names.
 
 makeCacheMatrix <- function(x = matrix()) {
-        Inv <- NULL
-        set <- function(y) {
+        Inv <- NULL #inicialize Inv as a member
+        set <- function(y) { #defines a method to set the matrix Value
                 x <<- y
                 Inv <<- NULL
         }
-        get <- function() x
-        setInv <- function(INVERSE) Inv <<- INVERSE
-        getInv <- function() Inv
-        list(set = set, get = get,
+        get <- function() x #gets the matrix value
+        setInv <- function(INVERSE) Inv <<- INVERSE #method to set Inv member
+        getInv <- function() Inv #method that gets that Inv member
+        list(set = set, get = get, #list of members
              setInv = setInv,
              getInv = getInv)
 
 }
 
+#Function that inverts a matrix or if i has been done before
+# it just returns the value calculeted in the past
 cacheSolve <- function(x, ...) {
         Inv <- x$getInv()
-        if(!is.null(Inv)) {
-                message("getting cached data")
-                return(Inv)
+        if(!is.null(Inv)) {#Test's if Inv already exists
+                message("getting cached data")#if So returns it
+                return(Inv) #Leave function after Returns
         }
-        data <- x$get()
-        Inv <- solve(data, ...)
-        x$setInv(Inv)
+        data <- x$get()#If Inv Doesn't exists get from chache matrix the Data
+        Inv <- solve(data, ...) 
+        x$setInv(Inv)##Alters the Inv value in the CacheMatrix Object
         Inv
 }
